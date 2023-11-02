@@ -103,4 +103,20 @@ my_table3_filtered = my_table3.filter(lambda x: x['EU'] == 'no').filter(
     lambda x: float(x['temperature']) < 5.0)
 print(my_table3_filtered.table)
 
+my_table3_filtered2 = (my_table3.filter(lambda x: x['EU'] == 'yes')
+                       .filter(lambda x: x['coastline'] == 'no'))
+print("Max temp")
+print(my_table3_filtered2.aggregate(lambda x: max(x), 'temperature'))
+print("Min temp")
+print(my_table3_filtered2.aggregate(lambda x: min(x), 'temperature'))
+print("\n")
+
+for countries in my_table2.table:
+    country_table = (my_table3.filter
+                     (lambda x: x['country'] == countries['country']))
+    if country_table.table:
+        print(countries['country'],
+              country_table.aggregate(lambda x: min(x), 'latitude'))
+
+
 
